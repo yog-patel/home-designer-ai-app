@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetDesign } from '../store/slices/designSlice';
 import { addToGallery } from '../store/slices/gallerySlice';
 import { setActiveTab, setCurrentStep } from '../store/slices/uiSlice';
-import { Share2, RotateCcw, Heart, ArrowLeft, Check } from 'lucide-react';
+import { Share2, RotateCcw, Heart, ArrowLeft, Check, Zap } from 'lucide-react';
 import Button from '../components/UI/Button';
+import { getRemainingDesigns, isPremium } from '../lib/userStorage';
 
 const ResultsPage = () => {
   const dispatch = useDispatch();
@@ -13,8 +14,15 @@ const ResultsPage = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
+  const remainingDesigns = getRemainingDesigns();
+  const isUserPremium = isPremium();
 
-  if (!generatedImage) {
+  // Handle both string (legacy) and object (new database) formats
+  const imageUrl = typeof generatedImage === 'string' 
+    ? generatedImage 
+    : generatedImage?.imageUrl;
+
+  if (!imageUrl) {
     return (
       <div className="flex items-center justify-center h-screen text-center">
         <div>
@@ -34,7 +42,7 @@ const ResultsPage = () => {
     dispatch(
       addToGallery({
         originalImage,
-        generatedImage,
+        generatedImage: typeof generatedImage === 'string' ? generatedImage : generatedImage?.imageUrl,
         room: selectedRoom,
         style: selectedStyle,
         palette: selectedPalette,
@@ -75,6 +83,19 @@ const ResultsPage = () => {
             </button>
             <h1 className="text-2xl font-bold text-gray-900">Your Design</h1>
           </div>
+          {!isUserPremium && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-red-50 rounded-full">
+              <span className="text-sm font-medium text-gray-900">
+                {remainingDesigns} designs left
+              </span>
+            </div>
+          )}
+          {isUserPremium && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-yellow-50 rounded-full">
+              <Zap size={16} className="text-yellow-600" />
+              <span className="text-sm font-medium text-yellow-900">Premium</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -103,7 +124,7 @@ const ResultsPage = () => {
           <div className="space-y-6">
             <div className="rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src={generatedImage}
+                src={imageUrl}
                 alt="Generated Design"
                 className="w-full h-auto object-cover"
               />
@@ -150,7 +171,7 @@ const ResultsPage = () => {
 
             <div className="rounded-2xl overflow-hidden shadow-lg relative">
               <img
-                src={generatedImage}
+                src={imageUrl}
                 alt="Generated"
                 className="w-full h-auto object-cover"
               />

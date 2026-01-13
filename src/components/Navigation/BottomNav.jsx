@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Layers, User, Settings } from 'lucide-react';
+import { Home, Layers, User, Settings, History } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveTab } from '../../store/slices/uiSlice';
 
@@ -10,13 +10,13 @@ const BottomNav = () => {
   const tabs = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'create', label: 'Create', icon: Layers },
-    { id: 'tools', label: 'Tools', icon: Settings },
+    { id: 'history', label: 'History', icon: History },
     { id: 'profile', label: 'Profile', icon: User },
   ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl safe-area-inset-bottom z-40">
-      <div className="flex justify-around max-w-3xl mx-auto">
+      <div className="flex justify-between max-w-3xl mx-auto w-full">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;

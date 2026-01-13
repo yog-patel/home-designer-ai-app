@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  designType: null,
   originalImage: null,
   generatedImage: null,
   selectedRoom: null,
@@ -15,6 +16,9 @@ export const designSlice = createSlice({
   name: 'design',
   initialState,
   reducers: {
+    setDesignType: (state, action) => {
+      state.designType = action.payload;
+    },
     setOriginalImage: (state, action) => {
       state.originalImage = action.payload;
     },
@@ -46,6 +50,7 @@ export const designSlice = createSlice({
 });
 
 export const {
+  setDesignType,
   setOriginalImage,
   setGeneratedImage,
   setSelectedRoom,
