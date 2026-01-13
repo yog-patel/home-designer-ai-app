@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Home AI",
+    "slug": "home-ai-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./public/icon-192x192.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./public/icon-192x192.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTabletMode": false,
+      "bundleIdentifier": "com.homeai.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./public/icon-192x192.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.homeai.app"
+    },
+    "web": {
+      "favicon": "./public/icon-192x192.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to generate design variations.",
+          "cameraPermission": "The app uses your camera to upload design inspiration photos."
+        }
+      ]
+    ]
+  }
+}

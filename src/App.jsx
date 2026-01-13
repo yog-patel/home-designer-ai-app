@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserId } from './lib/userStorage';
 import HomePage from './pages/HomePage';
@@ -9,6 +9,7 @@ import BottomNav from './components/Navigation/BottomNav';
 import './index.css';
 
 function App() {
+  const [error, setError] = useState(null);
   const activeTab = useSelector((state) => state.ui.activeTab);
 
   console.log('App rendered, activeTab:', activeTab);
@@ -21,22 +22,37 @@ function App() {
       console.log('User ID:', userId);
     } catch (error) {
       console.error('Error getting user ID:', error);
+      setError(error.message);
     }
   }, []);
 
+  if (error) {
+    return (
+      <div style={{ padding: '20px', color: 'red' }}>
+        <h2>Error initializing app</h2>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
   const renderPage = () => {
     console.log('Rendering page for tab:', activeTab);
-    switch (activeTab) {
-      case 'home':
-        return <HomePage />;
-      case 'create':
-        return <CreatePage />;
-      case 'history':
-        return <DesignHistoryPage />;
-      case 'profile':
-        return <ProfilePage />;
-      default:
-        return <HomePage />;
+    try {
+      switch (activeTab) {
+        case 'home':
+          return <HomePage />;
+        case 'create':
+          return <CreatePage />;
+        case 'history':
+          return <DesignHistoryPage />;
+        case 'profile':
+          return <ProfilePage />;
+        default:
+          return <HomePage />;
+      }
+    } catch (err) {
+      console.error('Error rendering page:', err);
+      return <div style={{ padding: '20px', color: 'red' }}>Error rendering page: {err.message}</div>;
     }
   };
 
