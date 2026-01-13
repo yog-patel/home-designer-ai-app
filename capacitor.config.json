@@ -2,6 +2,9 @@
   "appId": "com.homeai.app",
   "appName": "Home AI",
   "webDir": "dist",
+  "server": {
+    "cleartext": true
+  },
   "bundle": {
     "ios": null,
     "android": null
