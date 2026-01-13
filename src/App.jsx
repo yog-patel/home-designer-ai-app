@@ -11,12 +11,21 @@ import './index.css';
 function App() {
   const activeTab = useSelector((state) => state.ui.activeTab);
 
+  console.log('App rendered, activeTab:', activeTab);
+
   // Generate unique user ID on first load (stored in localStorage)
   useEffect(() => {
-    getUserId();
+    console.log('App useEffect: Getting user ID...');
+    try {
+      const userId = getUserId();
+      console.log('User ID:', userId);
+    } catch (error) {
+      console.error('Error getting user ID:', error);
+    }
   }, []);
 
   const renderPage = () => {
+    console.log('Rendering page for tab:', activeTab);
     switch (activeTab) {
       case 'home':
         return <HomePage />;
