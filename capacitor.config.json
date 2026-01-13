@@ -1,12 +1,9 @@
 {
-  "name": "home-ai",
-  "displayName": "Home AI",
-  "version": "1.0.0",
-  "description": "AI-powered interior redesign platform",
-  "main": "index.html",
   "appId": "com.homeai.app",
-  "plugins": {
-    "@capacitor/splash-screen": {}
-  },
-  "cordova": {}
+  "appName": "Home AI",
+  "webDir": "dist",
+  "bundle": {
+    "ios": null,
+    "android": null
+  }
 }

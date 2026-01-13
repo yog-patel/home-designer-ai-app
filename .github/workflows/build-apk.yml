@@ -29,10 +29,17 @@ jobs:
     - name: Build web app
       run: npm run build
     
-    - name: Setup Capacitor and build APK
+    - name: Setup Capacitor
+      run: npm install @capacitor/core @capacitor/cli @capacitor/android
+    
+    - name: Copy web assets to native project
+      run: npx cap copy
+    
+    - name: Sync Android platform
+      run: npx cap sync android
+    
+    - name: Build APK
       run: |
-        npm install @capacitor/core @capacitor/cli @capacitor/android
-        npx cap sync
         cd android
         chmod +x gradlew
         ./gradlew assembleDebug
